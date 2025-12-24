@@ -127,8 +127,42 @@ function submitFeedback() {
         return;
     }
 
+    // Base Google Form URL
+    let baseURL = "https://forms.gle/AZLFzJXr5LHMJUFE6";
+
+    // Mapping values exactly as Google Form expects
+    const courseMap = {
+        "CSE": "AI25CSE 110 – Principles of Programming",
+        "FSE": "AI25FSE 100 – Introduction to Engineering",
+        "MAT": "AI25MAT 265 – Calculus for Engineers I",
+        "CEE": "AI25CEE 101 – Technological, Social, and Sustainable Systems",
+        "PHS": "AI25PHS 105 – Introduction to Ethics Engineering"
+    };
+
+    const facultyMap = {
+        "Dr. P. Ramesh Babu (IT)": "Dr. P. Ramesh Babu Dept. of IT",
+        "Dr. Harish Mugutkar (Mechanical)": "Dr. Harish Mugutkar Dept. of Mechanical",
+        "Dr. A. Ajitha (EEE)": "Dr. A. Ajitha Dept. of EEE",
+        "Dr. Ravinder Reddy B (CSE)": "Dr. Ravinder Reddy B Dept. of CSE",
+        "Dr. J. Sharath Kumar Reddy (Mathematics)": "Dr. J. Sharath Kumar Reddy Dept. of Maths",
+        "Mr. Purushotham Theegala (Chemical Engineering)": "Mr. Purushotham Theegala Dept. of Chemical Engineering",
+        "Dr. Kishore Gopoji (English)": "Dr. Kishore Gopoji Dept. of English",
+        "Mr. T. Suneel Kumar (English)": "Mr. T. Suneel Kumar Dept. of English"
+    };
+
+    // Encode values
+    const facultyValue = encodeURIComponent(facultyMap[faculty]);
+    const courseValue = encodeURIComponent(courseMap[course]);
+
+    // Build final prefilled URL
+    const finalURL = `${baseURL}&entry.2059257900=${facultyValue}&entry.277505582=${courseValue}`;
+
+    window.open(finalURL, "_blank");
+
+    }
+
     // 🔴 Replace with your Google Form link
-    window.open("https://forms.gle/AZLFzJXr5LHMJUFE6", "_blank");
+    //window.open("https://forms.gle/AZLFzJXr5LHMJUFE6", "_blank");
 }
 </script>
 
