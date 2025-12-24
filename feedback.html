@@ -37,7 +37,7 @@ footer{text-align:center;margin-top:10px;font-size:12px;color:#555;}
 <body>
 
 <div class="container">
-<h2>B.Tech CSE Feedback<br>AY 2025–26 | Sem I</h2>
+<h2>B.Tech CS Feedback<br>AY 2025–26 | Sem I</h2>
 
 <label>Select Course</label>
 <select id="course" onchange="loadFaculty()">
@@ -78,13 +78,6 @@ const courseText = {
 
 // Faculty mapped per course
 const facultyData = {
- FSE: [
-  "Dr. Harish Mugutkar Dept. of Mechanical",
-  "Dr A Ajitha Dept. of EEE",
-  "Dr Ravinder Reddy B Dept. of CSE",
-  "Dr M Trupthi",
-  "Mr. T. Suneel Kumar Dept. of English"
- ],
  CSE:[
   "Dr. P. Ramesh Babu Dept. of IT"
  ],
@@ -96,7 +89,14 @@ const facultyData = {
  ],
  PHS:[
   "Dr. Kishore Gopoji Dept. of English"
- ]
+ ],
+ FSE: [
+  "Dr. Harish Mugutkar Dept. of Mechanical",
+  "Dr A Ajitha Dept. of EEE",
+  "Dr Ravinder Reddy B Dept. of CSE",
+  "Dr M Trupthi",
+  "Mr. T. Suneel Kumar Dept. of English"
+ ],
 };
 
 function loadFaculty(){
