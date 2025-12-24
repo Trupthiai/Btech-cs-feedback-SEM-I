@@ -1,134 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Feedback Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>B.Tech CSE Feedback Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    font-family: Arial;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-}
-.container{
-    background:#fff;
-    padding:25px;
-    width:420px;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-h2{text-align:center;margin-bottom:20px;}
-label{font-weight:bold;margin-top:12px;display:block;}
-select,button{
-    width:100%;
-    padding:10px;
-    margin-top:8px;
-}
-button{
-    background:#0056b3;
-    color:#fff;
-    border:none;
-    cursor:pointer;
-    margin-top:20px;
-}
-button:hover{background:#003f88;}
-</style>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f6f9;
+      margin:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+    }
+    .container{
+      background:#fff;
+      padding:25px;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+      width:420px;
+    }
+    img{
+      display:block;
+      margin:0 auto 15px auto;
+      max-width:260px;
+    }
+    h2{
+      text-align:center;
+      margin:5px 0 18px 0;
+    }
+    label{font-weight:bold;display:block;margin-top:10px;}
+    select,button{
+      width:100%;
+      padding:10px;
+      margin-top:8px;
+      font-size:14px;
+    }
+    button{
+      background:#0056b3;
+      color:#fff;
+      border:none;
+      margin-top:18px;
+      cursor:pointer;
+    }
+    button:hover{background:#003f88;}
+    footer{
+      font-size:11px;
+      text-align:center;
+      margin-top:10px;
+      color:#666;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>B.Tech CSE Feedback<br>AY 2025–26 | Sem I</h2>
+  <img src="CombinedLogo.png" alt="Anurag & ASU Logo">
 
-<label>Select Course</label>
-<select id="course" onchange="loadFaculty()">
-  <option value="">-- Select Course --</option>
-  <option value="AI25FSE 100 – Introduction to Engineering">
-    AI25FSE 100 – Introduction to Engineering
-  </option>
-  <option value="AI25CSE 110 – Principles of Programming">
-    AI25CSE 110 – Principles of Programming
-  </option>
-  <option value="AI25MAT 265 – Calculus for Engineers I">
-    AI25MAT 265 – Calculus for Engineers I
-  </option>
-  <option value="AI25CEE 101 – Technological, Social, and Sustainable Systems">
-    AI25CEE 101 – Technological, Social, and Sustainable Systems
-  </option>
-  <option value="AI25PHS 105 – Introduction to Ethics Engineering">
-    AI25PHS 105 – Introduction to Ethics Engineering
-  </option>
-</select>
+  <h2>B.Tech CSE Feedback<br>AY 2025–26 | Semester I</h2>
 
-<label>Select Faculty</label>
-<select id="faculty">
-  <option value="">-- Select Faculty --</option>
-</select>
+  <label>Select Course</label>
+  <select id="course" onchange="loadFaculty()">
+    <option value="">-- Select Course --</option>
 
-<button onclick="openForm()">Proceed to Feedback</button>
+    <!-- keep these first -->
+    <option value="CSE">AI25CSE 110 – Principles of Programming</option>
+    <option value="MAT">AI25MAT 265 – Calculus for Engineers I</option>
+    <option value="CEE">AI25CEE 101 – Technological, Social, and Sustainable Systems</option>
+    <option value="PHS">AI25PHS 105 – Introduction to Ethics Engineering</option>
+
+    <!-- Introduction to Engineering LAST -->
+    <option value="FSE">AI25FSE 100 – Introduction to Engineering</option>
+  </select>
+
+  <label>Select Faculty</label>
+  <select id="faculty">
+    <option value="">-- Select Faculty --</option>
+  </select>
+
+  <button onclick="openForm()">Proceed to Feedback</button>
+
+  <footer>Anurag International College</footer>
 </div>
 
 <script>
-/* EXACT faculty names as in Google Form (Question Type) */
-const facultyMap = {
- "AI25FSE 100 – Introduction to Engineering": [
-  "Dr A Ajitha Dept. of EEE",
-  "Dr Ravinder Reddy B Dept of CSE",
-  "Dr. Harish Mugutkar Dept. of Mechanical",
-  "Dr M Trupthi Dept. of AI",
-  "Mr.  T. Suneel Kumar,  Dept. of English"
- ],
- "AI25CSE 110 – Principles of Programming": [
-  "Dr. P. Ramesh Babu Dept. of IT"
- ],
- "AI25MAT 265 – Calculus for Engineers I": [
-  "Dr. J. Sharath Kumar Reddy,  Dept. of Maths"
- ],
- "AI25CEE 101 – Technological, Social, and Sustainable Systems": [
-  "Mr Purushotham Theegala, Dept. Chemical Engineering"
- ],
- "AI25PHS 105 – Introduction to Ethics Engineering": [
-  "Dr. Kishore Gopoji,  Dept. of English"
- ]
+/* GOOGLE FORM INFO */
+const baseFormURL =
+"https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url";
+
+const COURSE_FIELD = "entry.277505582";
+const FACULTY_FIELD = "entry.2059257900";
+
+/* EXACT COURSE TEXT (must match form) */
+const courseNames = {
+  CSE: "AI25CSE 110 – Principles of Programming",
+  MAT: "AI25MAT 265 – Calculus for Engineers I",
+  CEE: "AI25CEE 101 – Technological, Social, and Sustainable Systems",
+  PHS: "AI25PHS 105 – Introduction to Ethics Engineering",
+  FSE: "AI25FSE 100 – Introduction to Engineering"
+};
+
+/* EXACT FACULTY TEXT AS IN GOOGLE FORM */
+const facultyData = {
+  CSE: [
+    "Dr. P. Ramesh Babu Dept. of IT"
+  ],
+  MAT: [
+    "Dr. J. Sharath Kumar Reddy,  Dept. of Maths"
+  ],
+  CEE: [
+    "Mr Purushotham Theegala, Dept. Chemical Engineering"
+  ],
+  PHS: [
+    "Dr. Kishore Gopoji,  Dept. of English"
+  ],
+  FSE: [
+    "Dr A Ajitha Dept. of EEE",
+    "Dr Ravinder Reddy B Dept of CSE",
+    "Dr. Harish Mugutkar Dept. of Mechanical",
+    "Dr M Trupthi Dept. of AI",
+    "Mr.  T. Suneel Kumar,  Dept. of English"
+  ]
 };
 
 function loadFaculty(){
-  const c=document.getElementById("course").value;
-  const f=document.getElementById("faculty");
-  f.innerHTML="<option value=''>-- Select Faculty --</option>";
+  const course = document.getElementById("course").value;
+  const facultySelect = document.getElementById("faculty");
 
-  if(facultyMap[c]){
-    facultyMap[c].forEach(v=>{
-      let o=document.createElement("option");
-      o.value=v;
-      o.text=v;
-      f.add(o);
+  facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
+
+  if(facultyData[course]){
+    facultyData[course].forEach(name=>{
+      let opt=document.createElement("option");
+      opt.value=name;
+      opt.text=name;
+      facultySelect.add(opt);
     });
   }
 }
 
 function openForm(){
-  const course=document.getElementById("course").value;
-  const faculty=document.getElementById("faculty").value;
+  const c=document.getElementById("course").value;
+  const f=document.getElementById("faculty").value;
 
-  if(!course||!faculty){
-    alert("Please select both Course and Faculty");
+  if(!c||!f){
+    alert("Please select BOTH Course and Faculty");
     return;
   }
 
-  const base="https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url";
+  const courseText = courseNames[c];
+  const facultyText = f;
 
   const url =
-    base +
-    "&entry.277505582=" + encodeURIComponent(course) +
-    "&entry.2059257900=" + encodeURIComponent(faculty);
+    baseFormURL +
+    "&" + COURSE_FIELD + "=" + encodeURIComponent(courseText) +
+    "&" + FACULTY_FIELD + "=" + encodeURIComponent(facultyText);
 
-  window.open(url,"_blank");
+  window.open(url, "_blank");
 }
 </script>
 
