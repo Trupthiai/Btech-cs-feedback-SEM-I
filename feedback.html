@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            background-color: #f4f6f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -59,7 +59,10 @@
 <body>
 
 <div class="container">
-    <h2>B.Tech CSE Feedback<br>AY 2025–26 | Sem I</h2>
+    <h2>
+        B.Tech CSE Feedback<br>
+        AY 2025–26 | Semester I
+    </h2>
 
     <label>Select Course</label>
     <select id="course" onchange="loadFaculty()">
@@ -82,7 +85,8 @@
 </div>
 
 <script>
-const facultyMap = {
+/* ========= COURSE → FACULTY MAPPING ========= */
+const facultyData = {
     "AI25FSE 100 – Introduction to Engineering": [
         "Dr. Harish Mugutkar, Dept. of Mechanical",
         "Dr. A. Ajitha, Dept. of EEE",
@@ -110,8 +114,8 @@ function loadFaculty() {
 
     facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
 
-    if (facultyMap[course]) {
-        facultyMap[course].forEach(faculty => {
+    if (facultyData[course]) {
+        facultyData[course].forEach(faculty => {
             const option = document.createElement("option");
             option.value = faculty;
             option.text = faculty;
@@ -129,6 +133,10 @@ function submitFeedback() {
         return;
     }
 
+    /* ========= GOOGLE FORM PREFILL =========
+       Course  → entry.277505582
+       Faculty → entry.2059257900
+    */
     const baseFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url";
 
     const finalURL =
