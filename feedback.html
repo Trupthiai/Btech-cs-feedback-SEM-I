@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Feedback Portal</title>
+    <title>B.Tech CSE Feedback Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
+            background: #f4f6f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,7 +17,7 @@
         .container {
             background: #ffffff;
             padding: 25px;
-            width: 420px;
+            width: 450px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
@@ -58,16 +57,15 @@
 <body>
 
 <div class="container">
-    <h2>B.Tech CS Feedback<br>AY 2025–26 | Sem I</h2>
+    <h2>B.Tech CSE Feedback<br>AY 2025–26 | Semester I</h2>
 
     <label>Select Course</label>
     <select id="course" onchange="loadFaculty()">
         <option value="">-- Select Course --</option>
-        <option value="FSE">AI25FSE 100 – Introduction to Engineering</option>
-        <option value="CSE">AI25CSE 110 – Principles of Programming</option>
-        <option value="MAT">AI25MAT 265 – Calculus for Engineers I</option>
-        <option value="CEE">AI25CEE 101 – Technological, Social & Sustainable Systems</option>
-        <option value="PHS">AI25PHS 105 – Introduction to Ethics Engineering</option>
+        <option value="CSE110">AI25CSE 110 – Principles of Programming</option>
+        <option value="MAT265">AI25MAT 265 – Calculus for Engineers I</option>
+        <option value="CEE101">AI25CEE 101 – Technological, Social & Sustainable Systems</option>
+        <option value="PHS105">AI25PHS 105 – Introduction to Ethics Engineering</option>
     </select>
 
     <label>Select Faculty</label>
@@ -75,50 +73,59 @@
         <option value="">-- Select Faculty --</option>
     </select>
 
-    <button onclick="submitFeedback()">Proceed to Feedback</button>
+    <button onclick="openFeedback()">Proceed to Feedback</button>
 
     <footer>Anurag International College</footer>
 </div>
 
 <script>
-const facultyData = {
-    FSE: [
-        "Dr. Harish Mugutkar (Mechanical)",
-        "Dr. A. Ajitha (EEE)",
-        "Dr. Ravinder Reddy B (CSE)",
-        "Dr. M. Trupthi (AI)",
-        "Mr. T. Suneel Kumar (English)"
-    ],
-    CSE: [
-        "Dr. P. Ramesh Babu (IT)"
-    ],
-    MAT: [
-        "Dr. J. Sharath Kumar Reddy (Mathematics)"
-    ],
-    CEE: [
-        "Mr. Purushotham Theegala (Chemical Engineering)"
-    ],
-    PHS: [
-        "Dr. Kishore Gopoji (English)"
-    ]
+/* ===============================
+   PREFILLED GOOGLE FORM LINKS
+   =============================== */
+
+const feedbackLinks = {
+    "CSE110": {
+        "Dr. P. Ramesh Babu":
+        "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url&entry.2059257900=Dr.+P.+Ramesh+Babu+Dept.+of+IT&entry.277505582=AI25CSE+110+%E2%80%93+Principles+of+Programming"
+    },
+    "MAT265": {
+        "Dr. J. Sharath Kumar Reddy":
+        "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url&entry.2059257900=Dr.+J.+Sharath+Kumar+Reddy+Dept.+of+Maths&entry.277505582=AI25MAT+265+%E2%80%93+Calculus+for+Engineers+I"
+    },
+    "CEE101": {
+        "Mr. Purushotham Theegala":
+        "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url&entry.2059257900=Mr.+Purushotham+Theegala+Dept.+of+Chemical+Engineering&entry.277505582=AI25CEE+101+%E2%80%93+Technological,+Social,+and+Sustainable+Systems"
+    },
+    "PHS105": {
+        "Dr. Kishore Gopoji":
+        "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url&entry.2059257900=Dr.+Kishore+Gopoji+Dept.+of+English&entry.277505582=AI25PHS+105+%E2%80%93+Introduction+to+Ethics+Engineering"
+    }
 };
+
+/* ===============================
+   FACULTY DROPDOWN
+   =============================== */
 
 function loadFaculty() {
     const course = document.getElementById("course").value;
     const facultySelect = document.getElementById("faculty");
     facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
 
-    if (facultyData[course]) {
-        facultyData[course].forEach(faculty => {
-            let option = document.createElement("option");
-            option.text = faculty;
-            option.value = faculty;
-            facultySelect.add(option);
+    if (feedbackLinks[course]) {
+        Object.keys(feedbackLinks[course]).forEach(faculty => {
+            let opt = document.createElement("option");
+            opt.value = faculty;
+            opt.text = faculty;
+            facultySelect.add(opt);
         });
     }
 }
 
-function submitFeedback() {
+/* ===============================
+   OPEN PREFILLED FORM
+   =============================== */
+
+function openFeedback() {
     const course = document.getElementById("course").value;
     const faculty = document.getElementById("faculty").value;
 
@@ -127,42 +134,7 @@ function submitFeedback() {
         return;
     }
 
-    // Base Google Form URL
-    let baseURL = "https://forms.gle/AZLFzJXr5LHMJUFE6";
-
-    // Mapping values exactly as Google Form expects
-    const courseMap = {
-        "CSE": "AI25CSE 110 – Principles of Programming",
-        "FSE": "AI25FSE 100 – Introduction to Engineering",
-        "MAT": "AI25MAT 265 – Calculus for Engineers I",
-        "CEE": "AI25CEE 101 – Technological, Social, and Sustainable Systems",
-        "PHS": "AI25PHS 105 – Introduction to Ethics Engineering"
-    };
-
-    const facultyMap = {
-        "Dr. P. Ramesh Babu (IT)": "Dr. P. Ramesh Babu Dept. of IT",
-        "Dr. Harish Mugutkar (Mechanical)": "Dr. Harish Mugutkar Dept. of Mechanical",
-        "Dr. A. Ajitha (EEE)": "Dr. A. Ajitha Dept. of EEE",
-        "Dr. Ravinder Reddy B (CSE)": "Dr. Ravinder Reddy B Dept. of CSE",
-        "Dr. J. Sharath Kumar Reddy (Mathematics)": "Dr. J. Sharath Kumar Reddy Dept. of Maths",
-        "Mr. Purushotham Theegala (Chemical Engineering)": "Mr. Purushotham Theegala Dept. of Chemical Engineering",
-        "Dr. Kishore Gopoji (English)": "Dr. Kishore Gopoji Dept. of English",
-        "Mr. T. Suneel Kumar (English)": "Mr. T. Suneel Kumar Dept. of English"
-    };
-
-    // Encode values
-    const facultyValue = encodeURIComponent(facultyMap[faculty]);
-    const courseValue = encodeURIComponent(courseMap[course]);
-
-    // Build final prefilled URL
-    const finalURL = `${baseURL}&entry.2059257900=${facultyValue}&entry.277505582=${courseValue}`;
-
-    window.open(finalURL, "_blank");
-
-    }
-
-    // 🔴 Replace with your Google Form link
-    //window.open("https://forms.gle/AZLFzJXr5LHMJUFE6", "_blank");
+    window.open(feedbackLinks[course][faculty], "_blank");
 }
 </script>
 
