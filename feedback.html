@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B.Tech CSE Feedback Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            width: 420px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #003f88;
+        }
+        footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>B.Tech CSE Feedback<br>AY 2025–26 | Sem I</h2>
+
+    <label>Select Course</label>
+    <select id="course" onchange="loadFaculty()">
+        <option value="">-- Select Course --</option>
+        <option value="FSE">AI25FSE 100 – Introduction to Engineering</option>
+        <option value="CSE">AI25CSE 110 – Principles of Programming</option>
+        <option value="MAT">AI25MAT 265 – Calculus for Engineers I</option>
+        <option value="CEE">AI25CEE 101 – Technological, Social & Sustainable Systems</option>
+        <option value="PHS">AI25PHS 105 – Introduction to Ethics Engineering</option>
+    </select>
+
+    <label>Select Faculty</label>
+    <select id="faculty">
+        <option value="">-- Select Faculty --</option>
+    </select>
+
+    <button onclick="submitFeedback()">Proceed to Feedback</button>
+
+    <footer>
+        Anurag International College
+    </footer>
+</div>
+
+<script>
+const facultyData = {
+    FSE: [
+        "Dr. Harish Mugutkar (Mechanical)",
+        "Dr. A. Ajitha (EEE)",
+        "Dr. Ravinder Reddy B (CSE)",
+        "Dr. M. Trupthi (AI)",
+        "Mr. T. Suneel Kumar (English)"
+    ],
+    CSE: [
+        "Dr. P. Ramesh Babu (IT)"
+    ],
+    MAT: [
+        "Dr. J. Sharath Kumar Reddy (Mathematics)"
+    ],
+    CEE: [
+        "Mr. Purushotham Theegala (Chemical Engineering)"
+    ],
+    PHS: [
+        "Dr. Kishore Gopoji (English)"
+    ]
+};
+
+function loadFaculty() {
+    const course = document.getElementById("course").value;
+    const facultySelect = document.getElementById("faculty");
+    facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
+
+    if (facultyData[course]) {
+        facultyData[course].forEach(faculty => {
+            let option = document.createElement("option");
+            option.text = faculty;
+            option.value = faculty;
+            facultySelect.add(option);
+        });
+    }
+}
+
+function submitFeedback() {
+    const course = document.getElementById("course").value;
+    const faculty = document.getElementById("faculty").value;
+
+    if (!course || !faculty) {
+        alert("Please select both Course and Faculty");
+        return;
+    }
+
+    // 🔴 Replace this with your Google Form link
+    const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=sharing&ouid=114840702520628903707";
+
+    window.open(googleFormURL, "_blank");
+}
+</script>
+
+</body>
+</html>
