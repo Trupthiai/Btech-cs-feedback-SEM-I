@@ -1,101 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>B.Tech CS Feedback Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#f4f6f9;
-    margin:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-}
-.container{
-    background:white;
-    width:430px;
-    padding:20px 25px 25px 25px;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-.logo{
-    text-align:center;
-    margin-bottom:15px;
-}
-.logo img{
-    max-width:320px;
-}
-h2{
-    text-align:center;
-    margin:10px 0 15px 0;
-}
-label{
-    font-weight:bold;
-    margin-top:12px;
-    display:block;
-}
-select, button{
-    width:100%;
-    padding:10px;
-    margin-top:8px;
-    font-size:14px;
-}
-button{
-    background:#0056b3;
-    color:white;
-    border:none;
-    cursor:pointer;
-    margin-top:20px;
-}
-button:hover{
-    background:#003f88;
-}
-footer{
-    text-align:center;
-    margin-top:12px;
-    font-size:12px;
-    color:#444;
-}
+    body{
+        font-family: Arial, sans-serif;
+        background:#f4f6f9;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        margin:0;
+    }
+    .container{
+        background:white;
+        padding:25px;
+        width:450px;
+        border-radius:12px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        text-align:center;
+    }
+    img{
+        width:260px;
+        margin-bottom:15px;
+    }
+    h2{
+        margin:5px 0 15px 0;
+    }
+    label{
+        font-weight:bold;
+        display:block;
+        text-align:left;
+        margin-top:10px;
+    }
+    select,button{
+        width:100%;
+        padding:10px;
+        margin-top:8px;
+        font-size:14px;
+    }
+    button{
+        background:#0056b3;
+        color:white;
+        border:none;
+        cursor:pointer;
+        margin-top:18px;
+    }
+    button:hover{
+        background:#003f88;
+    }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-    <div class="logo">
-        <img src="CombinedLogo.png" alt="College Logo">
-    </div>
+    <!-- 🔵 MAKE SURE CombinedLogo.png IS IN THE REPO ROOT -->
+    <img src="./CombinedLogo.png" alt="Anurag-ASU Logo">
 
-    <h2>B.Tech CS Feedback<br>AY 2025–26 • Semester I</h2>
+    <h2>B.Tech CS<br>AY 2025–26 | Semester I<br>Course Feedback</h2>
 
     <label>Select Course</label>
     <select id="course" onchange="loadFaculty()">
         <option value="">-- Select Course --</option>
 
-        <!-- Keep these EXACT — Intro to Engineering LAST -->
-        <option value="AI25CSE 110 – Principles of Programming">
-            AI25CSE 110 – Principles of Programming
-        </option>
+        <option value="AI25CSE 110 – Principles of Programming">AI25CSE 110 – Principles of Programming</option>
+        <option value="AI25MAT 265 – Calculus for Engineers I">AI25MAT 265 – Calculus for Engineers I</option>
+        <option value="AI25CEE 101 – Technological, Social, and Sustainable Systems">AI25CEE 101 – Technological, Social, and Sustainable Systems</option>
+        <option value="AI25PHS 105 – Introduction to Ethics Engineering">AI25PHS 105 – Introduction to Ethics Engineering</option>
 
-        <option value="AI25MAT 265 – Calculus for Engineers I">
-            AI25MAT 265 – Calculus for Engineers I
-        </option>
-
-        <option value="AI25CEE 101 – Technological, Social, and Sustainable Systems">
-            AI25CEE 101 – Technological, Social, and Sustainable Systems
-        </option>
-
-        <option value="AI25PHS 105 – Introduction to Ethics Engineering">
-            AI25PHS 105 – Introduction to Ethics Engineering
-        </option>
-
-        <option value="AI25FSE 100 – Introduction to Engineering">
-            AI25FSE 100 – Introduction to Engineering
-        </option>
+        <!-- 👇 THIS ONE LAST AS REQUESTED -->
+        <option value="AI25FSE 100 – Introduction to Engineering">AI25FSE 100 – Introduction to Engineering</option>
     </select>
 
     <label>Select Faculty</label>
@@ -103,22 +82,22 @@ footer{
         <option value="">-- Select Faculty --</option>
     </select>
 
-    <button onclick="submitFeedback()">Proceed to Feedback</button>
+    <button onclick="openForm()">Proceed to Feedback</button>
 
-    <footer>Anurag International College</footer>
 </div>
 
 <script>
-// 🔹 EXACT Google Form URL base (DO NOT CHANGE)
-const formBase =
- "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url";
 
-// 🔹 Google Form entry IDs (these are from your form)
-const facultyEntry = "entry.2059257900";
-const courseEntry  = "entry.277505582";
+// 🔵 GOOGLE FORM FIELD IDs
+const COURSE_FIELD = "entry.277505582";
+const FACULTY_FIELD = "entry.2059257900";
 
-// 🔹 Faculty available per course
-const facultyData = {
+// 🔵 BASE GOOGLE FORM URL
+const FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform";
+
+// 🔵 COURSE → FACULTY MAP (ONLY VALID FACULTY PER FORM)
+const facultyMap = {
+
     "AI25CSE 110 – Principles of Programming": [
         "Dr. P. Ramesh Babu Dept. of IT"
     ],
@@ -144,37 +123,35 @@ const facultyData = {
     ]
 };
 
-// 🔹 Populate faculty list
 function loadFaculty(){
     const course = document.getElementById("course").value;
     const facultySelect = document.getElementById("faculty");
 
     facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
 
-    if(facultyData[course]){
-        facultyData[course].forEach(name=>{
-            let opt=document.createElement("option");
-            opt.value=name;
-            opt.text=name;
+    if(facultyMap[course]){
+        facultyMap[course].forEach(name=>{
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.text = name;
             facultySelect.add(opt);
         });
     }
 }
 
-// 🔹 Build prefilled Google Form link
-function submitFeedback(){
+function openForm(){
     const course = document.getElementById("course").value;
     const faculty = document.getElementById("faculty").value;
 
     if(!course || !faculty){
-        alert("Please select BOTH Course and Faculty");
+        alert("Please select both Course and Faculty");
         return;
     }
 
     const url =
-      formBase +
-      "&" + courseEntry + "=" + encodeURIComponent(course) +
-      "&" + facultyEntry + "=" + encodeURIComponent(faculty);
+        FORM_BASE +
+        `?usp=pp_url&${COURSE_FIELD}=` + encodeURIComponent(course) +
+        `&${FACULTY_FIELD}=` + encodeURIComponent(faculty);
 
     window.open(url, "_blank");
 }
