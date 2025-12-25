@@ -1,155 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>B.Tech CS Feedback Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
- body{
-   font-family: Arial, sans-serif;
-   background:#f4f6f9;
-   display:flex;
-   justify-content:center;
-   align-items:center;
-   height:100vh;
-   margin:0;
- }
- .container{
-   background:#fff;
-   padding:25px;
-   width:430px;
-   border-radius:10px;
-   box-shadow:0 4px 12px rgba(0,0,0,0.15);
- }
- h2{text-align:center;margin-bottom:5px}
- h4{text-align:center;margin-top:0;color:#444}
- label{font-weight:bold;margin-top:12px;display:block}
- select,button{
-   width:100%;padding:10px;margin-top:8px;font-size:14px;
- }
- button{
-   background:#0056b3;color:#fff;border:none;cursor:pointer;margin-top:20px;
- }
- button:hover{background:#003f88;}
- .logo{
-   display:block;
-   margin:0 auto 10px auto;
-   max-width:260px;
- }
- footer{text-align:center;margin-top:12px;font-size:12px;color:#666}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+.container{
+    background:white;
+    width:430px;
+    padding:20px 25px 25px 25px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+.logo{
+    text-align:center;
+    margin-bottom:15px;
+}
+.logo img{
+    max-width:320px;
+}
+h2{
+    text-align:center;
+    margin:10px 0 15px 0;
+}
+label{
+    font-weight:bold;
+    margin-top:12px;
+    display:block;
+}
+select, button{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    font-size:14px;
+}
+button{
+    background:#0056b3;
+    color:white;
+    border:none;
+    cursor:pointer;
+    margin-top:20px;
+}
+button:hover{
+    background:#003f88;
+}
+footer{
+    text-align:center;
+    margin-top:12px;
+    font-size:12px;
+    color:#444;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-  <img src="logo.png" alt="College Logo" class="logo">
+    <div class="logo">
+        <img src="CombinedLogo.png" alt="College Logo">
+    </div>
 
-  <h2>B.Tech CSE Feedback</h2>
-  <h4>AY 2025–26 | Semester I</h4>
+    <h2>B.Tech CS Feedback<br>AY 2025–26 • Semester I</h2>
 
-  <label>Select Course</label>
-  <select id="course" onchange="loadFaculty()">
-    <option value="">-- Select Course --</option>
+    <label>Select Course</label>
+    <select id="course" onchange="loadFaculty()">
+        <option value="">-- Select Course --</option>
 
-    <option value="AI25CSE 110 – Principles of Programming">
-      AI25CSE 110 – Principles of Programming
-    </option>
+        <!-- Keep these EXACT — Intro to Engineering LAST -->
+        <option value="AI25CSE 110 – Principles of Programming">
+            AI25CSE 110 – Principles of Programming
+        </option>
 
-    <option value="AI25MAT 265 – Calculus for Engineers I">
-      AI25MAT 265 – Calculus for Engineers I
-    </option>
+        <option value="AI25MAT 265 – Calculus for Engineers I">
+            AI25MAT 265 – Calculus for Engineers I
+        </option>
 
-    <option value="AI25CEE 101 – Technological, Social, and Sustainable Systems">
-      AI25CEE 101 – Technological, Social, and Sustainable Systems
-    </option>
+        <option value="AI25CEE 101 – Technological, Social, and Sustainable Systems">
+            AI25CEE 101 – Technological, Social, and Sustainable Systems
+        </option>
 
-    <option value="AI25PHS 105 – Introduction to Ethics Engineering">
-      AI25PHS 105 – Introduction to Ethics Engineering
-    </option>
+        <option value="AI25PHS 105 – Introduction to Ethics Engineering">
+            AI25PHS 105 – Introduction to Ethics Engineering
+        </option>
 
-    <!-- INTRODUCTION TO ENGINEERING LAST -->
-    <option value="AI25FSE 100 – Introduction to Engineering">
-      AI25FSE 100 – Introduction to Engineering
-    </option>
-  </select>
+        <option value="AI25FSE 100 – Introduction to Engineering">
+            AI25FSE 100 – Introduction to Engineering
+        </option>
+    </select>
 
-  <label>Select Faculty</label>
-  <select id="faculty">
-    <option value="">-- Select Faculty --</option>
-  </select>
+    <label>Select Faculty</label>
+    <select id="faculty">
+        <option value="">-- Select Faculty --</option>
+    </select>
 
-  <button onclick="submitFeedback()">Proceed to Feedback</button>
+    <button onclick="submitFeedback()">Proceed to Feedback</button>
 
-  <footer>Anurag International College</footer>
-
+    <footer>Anurag International College</footer>
 </div>
 
 <script>
-// ---------- GOOGLE FORM BASE URL ----------
-const baseFormURL =
+// 🔹 EXACT Google Form URL base (DO NOT CHANGE)
+const formBase =
  "https://docs.google.com/forms/d/e/1FAIpQLSdpSrORSej9YWKepPs44uTAhneL3YpFIJcG5pr9Arf8ugGuoA/viewform?usp=pp_url";
 
-// ---------- ENTRY IDS (DO NOT CHANGE) ----------
-const ENTRY_COURSE = "entry.277505582";
-const ENTRY_FACULTY = "entry.2059257900";
+// 🔹 Google Form entry IDs (these are from your form)
+const facultyEntry = "entry.2059257900";
+const courseEntry  = "entry.277505582";
 
-// ---------- FACULTY MAPPING ----------
-const facultyMap = {
-  "AI25CSE 110 – Principles of Programming": [
-    "Dr. P. Ramesh Babu Dept. of IT"
-  ],
+// 🔹 Faculty available per course
+const facultyData = {
+    "AI25CSE 110 – Principles of Programming": [
+        "Dr. P. Ramesh Babu Dept. of IT"
+    ],
 
-  "AI25MAT 265 – Calculus for Engineers I": [
-    "Dr. J. Sharath Kumar Reddy,  Dept. of Maths"
-  ],
+    "AI25MAT 265 – Calculus for Engineers I": [
+        "Dr. J. Sharath Kumar Reddy,  Dept. of Maths"
+    ],
 
-  "AI25CEE 101 – Technological, Social, and Sustainable Systems": [
-    "Mr Purushotham Theegala, Dept. Chemical Engineering"
-  ],
+    "AI25CEE 101 – Technological, Social, and Sustainable Systems": [
+        "Mr Purushotham Theegala, Dept. Chemical Engineering"
+    ],
 
-  "AI25PHS 105 – Introduction to Ethics Engineering": [
-    "Dr. Kishore Gopoji,  Dept. of English"
-  ],
+    "AI25PHS 105 – Introduction to Ethics Engineering": [
+        "Dr. Kishore Gopoji,  Dept. of English"
+    ],
 
-  "AI25FSE 100 – Introduction to Engineering": [
-    "Dr A Ajitha Dept. of EEE",
-    "Dr Ravinder Reddy B Dept of CSE",
-    "Dr. Harish Mugutkar Dept. of Mechanical",
-    "Dr M Trupthi Dept. of AI",
-    "Mr.  T. Suneel Kumar,  Dept. of English"
-  ]
+    "AI25FSE 100 – Introduction to Engineering": [
+        "Dr A Ajitha Dept. of EEE",
+        "Dr Ravinder Reddy B Dept of CSE",
+        "Dr. Harish Mugutkar Dept. of Mechanical",
+        "Dr M Trupthi Dept. of AI",
+        "Mr.  T. Suneel Kumar,  Dept. of English"
+    ]
 };
 
-// ---------- LOAD FACULTY ----------
+// 🔹 Populate faculty list
 function loadFaculty(){
-  const course = document.getElementById("course").value;
-  const facultySelect = document.getElementById("faculty");
-  facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
+    const course = document.getElementById("course").value;
+    const facultySelect = document.getElementById("faculty");
 
-  if(facultyMap[course]){
-    facultyMap[course].forEach(name=>{
-      let opt=document.createElement("option");
-      opt.value=name;
-      opt.text=name;
-      facultySelect.add(opt);
-    });
-  }
+    facultySelect.innerHTML = "<option value=''>-- Select Faculty --</option>";
+
+    if(facultyData[course]){
+        facultyData[course].forEach(name=>{
+            let opt=document.createElement("option");
+            opt.value=name;
+            opt.text=name;
+            facultySelect.add(opt);
+        });
+    }
 }
 
-// ---------- SUBMIT ----------
+// 🔹 Build prefilled Google Form link
 function submitFeedback(){
-  const course=document.getElementById("course").value;
-  const faculty=document.getElementById("faculty").value;
+    const course = document.getElementById("course").value;
+    const faculty = document.getElementById("faculty").value;
 
-  if(!course || !faculty){
-    alert("Please select both Course and Faculty");
-    return;
-  }
+    if(!course || !faculty){
+        alert("Please select BOTH Course and Faculty");
+        return;
+    }
 
-  const url = `${baseFormURL}&${ENTRY_COURSE}=${encodeURIComponent(course)}&${ENTRY_FACULTY}=${encodeURIComponent(faculty)}`;
-  window.open(url,"_blank");
+    const url =
+      formBase +
+      "&" + courseEntry + "=" + encodeURIComponent(course) +
+      "&" + facultyEntry + "=" + encodeURIComponent(faculty);
+
+    window.open(url, "_blank");
 }
 </script>
 
